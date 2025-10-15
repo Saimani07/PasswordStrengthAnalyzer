@@ -1,0 +1,50 @@
+import java.util.Scanner;
+import java.util.regex.*;
+
+public class PasswordStrengthAnalyzer {
+
+    public static String checkStrength(String password) {
+        int strengthPoints = 0;
+
+        // Check password length
+        if (password.length() >= 8)
+            strengthPoints++;
+
+        // Check for uppercase letters
+        if (Pattern.compile("[A-Z]").matcher(password).find())
+            strengthPoints++;
+
+        // Check for lowercase letters
+        if (Pattern.compile("[a-z]").matcher(password).find())
+            strengthPoints++;
+
+        // Check for digits
+        if (Pattern.compile("[0-9]").matcher(password).find())
+            strengthPoints++;
+
+        // Check for special characters
+        if (Pattern.compile("[!@#$%^&*(),.?\":{}|<>]").matcher(password).find())
+            strengthPoints++;
+
+        // Determine strength
+        switch (strengthPoints) {
+            case 5:
+                return "Strong Password 💪";
+            case 3:
+            case 4:
+                return "Moderate Password ⚠️";
+            default:
+                return "Weak Password ❌";
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter your password: ");
+        String password = sc.nextLine();
+
+        String result = checkStrength(password);
+        System.out.println("Password Strength: " + result);
+        sc.close();
+    }
+}
